@@ -14,7 +14,7 @@ const Banner = () => {
             excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
             a id nisi.
           </p>
-          <button className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white font-semibold">
+          <button className="btn btn-primary bg-gradient-to-l from-primary to-secondary text-white font-semibold">
             Get Started
           </button>
         </div>
