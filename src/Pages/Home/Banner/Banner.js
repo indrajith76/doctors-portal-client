@@ -3,6 +3,7 @@ import chair from "../../../assets/images/chair.png";
 import "./Banner.css";
 import AOS from 'aos';
 import 'aos/dist/aos.css';  
+import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton";
 AOS.init({ duration: 2000 });
 
 const Banner = () => {
@@ -17,9 +18,7 @@ const Banner = () => {
             excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
             a id nisi.
           </p>
-          <button className="btn btn-primary bg-gradient-to-l from-primary to-secondary text-white font-semibold">
-            Get Started
-          </button>
+          <PrimaryButton>Get Started</PrimaryButton>
         </div>
       </div>
     </div>

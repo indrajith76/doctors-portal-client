@@ -2,20 +2,21 @@ import React from "react";
 import treatment from "../../../assets/images/treatment.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton";
 AOS.init({ duration: 2000 });
 
 const About = () => {
   return (
     <div className="hero my-36">
-      <div className="hero-content flex-col lg:flex-row gap-16">
+      <div className="hero-content flex-col md:flex-row gap-16">
         <img
           data-aos="fade-right"
           src={treatment}
-          className="w-1/4 rounded-lg shadow-2xl"
+          className="md:w-1/2 lg:w-1/4 rounded-lg shadow-2xl"
           alt=""
         />
-        <div data-aos="fade-left" className="w-2/5">
-          <h1 className="text-5xl font-bold">
+        <div data-aos="fade-left" className="md:w-2/5">
+          <h1 className="text-3xl lg:text-5xl font-bold">
             Exceptional Dental Care, on Your Terms
           </h1>
           <p className="py-6">
@@ -26,7 +27,7 @@ const About = () => {
             here', making it look like readable English. Many desktop publishing
             packages and web page
           </p>
-          <button className="btn btn-primary bg-gradient-to-l from-primary to-secondary font-bold text-white">Get Started</button>
+          <PrimaryButton>Get Started</PrimaryButton>
         </div>
       </div>
     </div>
