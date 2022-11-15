@@ -1,34 +1,47 @@
 import React from "react";
-import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
-const Login = () => {
+const SignUp = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
-  const handleLogin = (data) => {
+  const handleSignUp = (data) => {
     console.log(data);
   };
 
   return (
     <div className="flex justify-center my-10">
       <div className="w-96 p-7 border rounded-lg shadow-lg">
-        <h2 className="text-xl text-center">Login</h2>
-        <form onSubmit={handleSubmit(handleLogin)}>
+        <h2 className="text-xl text-center">Sign Up</h2>
+        <form onSubmit={handleSubmit(handleSignUp)}>
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text">Name</span>
+            </label>
+            <input
+              type="text"
+              {...register("name", { required: "Name is required." })}
+              className="input input-bordered w-full"
+            />
+            {errors.name && (
+              <small className="text-red-500">{errors.name.message}</small>
+            )}
+          </div>
           <div className="form-control w-full">
             <label className="label">
               <span className="label-text">Email</span>
             </label>
             <input
               type="email"
-              {...register("email", { required: "Email Address is required" })}
+              {...register("email", { required: "Email is required." })}
               className="input input-bordered w-full"
             />
             {errors.email && (
-              <small className="text-red-500">{errors.email?.message}</small>
+              <small className="text-red-500">{errors.email.message}</small>
             )}
           </div>
           <div className="form-control w-full">
@@ -38,9 +51,15 @@ const Login = () => {
             <input
               type="password"
               {...register("password", {
-                min: 6,
-                required: "Password is required",
-                minLength: { value: 6, message: "Password must be at least 6 characters." }
+                required: "Password is required.",
+                minLength: {
+                  value: 6,
+                  message: "Password should be 6 character.",
+                },
+                pattern: {
+                  value: /(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[#?!@$%^&*\-_])/,
+                  message:'Password must be strong.'
+                },
               })}
               className="input input-bordered w-full"
             />
@@ -58,9 +77,9 @@ const Login = () => {
           />
         </form>
         <p className="my-2">
-          New to Doctors Portal?{" "}
-          <Link className="text-secondary font-semibold" to="/signup">
-            Create new account
+          Already have an account?{" "}
+          <Link className="text-secondary font-semibold" to="/login">
+            Please Login
           </Link>
         </p>
         <div className="divider">OR</div>
@@ -70,4 +89,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
