@@ -1,16 +1,43 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../../contexts/AuthProvider";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
+  const { createUser, updateUser } = useContext(AuthContext);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
+  const [signUpError, setSignUpError] = useState("");
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location?.state?.from?.pathname || "/";
 
   const handleSignUp = (data) => {
     console.log(data);
+    setSignUpError("");
+    createUser(data.email, data.password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        toast.success("Sign Up successfully!");
+        navigate(from, { replace: true });
+        const userInfo = {
+          displayName: data.name,
+        };
+        updateUser(userInfo)
+          .then(() => {})
+          .catch((err) => console.error(err));
+      })
+      .catch((error) => {
+        console.error(error);
+        setSignUpError(error.message);
+      });
   };
 
   return (
@@ -58,7 +85,8 @@ const SignUp = () => {
                 },
                 pattern: {
                   value: /(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[#?!@$%^&*\-_])/,
-                  message:'Password must be strong.'
+                  message:
+                    "Password must have uppercase number and special character.",
                 },
               })}
               className="input input-bordered w-full"
@@ -66,12 +94,10 @@ const SignUp = () => {
             {errors.password && (
               <small className="text-red-500">{errors.password?.message}</small>
             )}
-            <label className="label">
-              <span className="label-text">Forget Password?</span>
-            </label>
           </div>
+          {signUpError && <p className="text-red-500">{signUpError}</p>}
           <input
-            className="btn btn-accent w-full"
+            className="btn btn-accent w-full mt-5"
             value="Login"
             type="submit"
           />

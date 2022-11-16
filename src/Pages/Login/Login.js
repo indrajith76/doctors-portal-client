@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthProvider";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const {
@@ -8,9 +10,33 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
+  const { signIn, googleSignIn } = useContext(AuthContext);
+  const [loginError, setLoginError] = useState("");
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location?.state?.from?.pathname || "/";
 
   const handleLogin = (data) => {
-    console.log(data);
+    setLoginError("");
+    signIn(data.email, data.password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        navigate(from, { replace: true });
+        toast.success("Login Successfully.");
+      })
+      .catch((err) => setLoginError(err.message));
+  };
+
+  const handleGoogleSignIn = () => {
+    googleSignIn()
+      .then(() => {
+        navigate(from, { replace: true });
+        toast.success("Login Successfully.");
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -40,7 +66,10 @@ const Login = () => {
               {...register("password", {
                 min: 6,
                 required: "Password is required",
-                minLength: { value: 6, message: "Password must be at least 6 characters." }
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters.",
+                },
               })}
               className="input input-bordered w-full"
             />
@@ -56,6 +85,7 @@ const Login = () => {
             value="Login"
             type="submit"
           />
+          <div>{loginError && <p>{loginError}</p>}</div>
         </form>
         <p className="my-2">
           New to Doctors Portal?{" "}
@@ -64,7 +94,9 @@ const Login = () => {
           </Link>
         </p>
         <div className="divider">OR</div>
-        <button className="btn btn-outline w-full">CONTINUE WITH GOOGLE</button>
+        <button onClick={handleGoogleSignIn} className="btn btn-outline w-full">
+          CONTINUE WITH GOOGLE
+        </button>
       </div>
     </div>
   );
