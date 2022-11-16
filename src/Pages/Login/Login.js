@@ -11,7 +11,7 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const { signIn, googleSignIn } = useContext(AuthContext);
+  const { signIn, googleSignIn, isDark } = useContext(AuthContext);
   const [loginError, setLoginError] = useState("");
   const [isOnResetModal, setIsOnResetModal] = useState(true);
 
@@ -45,11 +45,23 @@ const Login = () => {
     <>
       <div className="flex justify-center my-10">
         <div className="w-96 p-7 border rounded-lg shadow-lg">
-          <h2 className="text-xl text-center">Login</h2>
+          <h2
+            className={`text-xl text-center ${
+              isDark ? "text-base-100" : "text-accent"
+            }`}
+          >
+            Login
+          </h2>
           <form onSubmit={handleSubmit(handleLogin)}>
             <div className="form-control w-full">
               <label className="label">
-                <span className="label-text">Email</span>
+                <span
+                  className={`label-text ${
+                    isDark ? "text-base-100" : "text-accent"
+                  }`}
+                >
+                  Email
+                </span>
               </label>
               <input
                 type="email"
@@ -64,7 +76,13 @@ const Login = () => {
             </div>
             <div className="form-control w-full">
               <label className="label">
-                <span className="label-text">Password</span>
+                <span
+                  className={`label-text ${
+                    isDark ? "text-base-100" : "text-accent"
+                  }`}
+                >
+                  Password
+                </span>
               </label>
               <input
                 type="password"
@@ -84,7 +102,12 @@ const Login = () => {
                 </small>
               )}
               <label className="label">
-                <label htmlFor="reset-password-modal" className="label-text">
+                <label
+                  htmlFor="reset-password-modal"
+                  className={`label-text ${
+                    isDark ? "text-base-100" : "text-accent"
+                  }`}
+                >
                   Forget Password?
                 </label>
               </label>
@@ -96,16 +119,22 @@ const Login = () => {
             />
             <div>{loginError && <p>{loginError}</p>}</div>
           </form>
-          <p className="my-2">
+          <p className={`my-2 ${isDark ? "text-base-100" : "text-accent"}`}>
             New to Doctors Portal?{" "}
             <Link className="text-secondary font-semibold" to="/signup">
               Create new account
             </Link>
           </p>
-          <div className="divider">OR</div>
+          <div
+            className={`divider ${isDark ? "text-base-100" : "text-accent"}`}
+          >
+            OR
+          </div>
           <button
             onClick={handleGoogleSignIn}
-            className="btn btn-outline w-full"
+            className={`btn btn-outline w-full ${
+              isDark ? "text-base-100" : "text-accent"
+            }`}
           >
             CONTINUE WITH GOOGLE
           </button>

@@ -5,7 +5,7 @@ import { AuthContext } from "../../contexts/AuthProvider";
 import toast from "react-hot-toast";
 
 const SignUp = () => {
-  const { createUser, updateUser } = useContext(AuthContext);
+  const { createUser, updateUser, isDark } = useContext(AuthContext);
   const {
     register,
     formState: { errors },
@@ -43,11 +43,23 @@ const SignUp = () => {
   return (
     <div className="flex justify-center my-10">
       <div className="w-96 p-7 border rounded-lg shadow-lg">
-        <h2 className="text-xl text-center">Sign Up</h2>
+        <h2
+          className={`text-xl text-center ${
+            isDark ? "text-base-100" : "text-accent"
+          }`}
+        >
+          Sign Up
+        </h2>
         <form onSubmit={handleSubmit(handleSignUp)}>
           <div className="form-control w-full">
             <label className="label">
-              <span className="label-text">Name</span>
+              <span
+                className={`label-text ${
+                  isDark ? "text-base-100" : "text-accent"
+                }`}
+              >
+                Name
+              </span>
             </label>
             <input
               type="text"
@@ -60,7 +72,13 @@ const SignUp = () => {
           </div>
           <div className="form-control w-full">
             <label className="label">
-              <span className="label-text">Email</span>
+              <span
+                className={`label-text ${
+                  isDark ? "text-base-100" : "text-accent"
+                }`}
+              >
+                Email
+              </span>
             </label>
             <input
               type="email"
@@ -73,7 +91,13 @@ const SignUp = () => {
           </div>
           <div className="form-control w-full">
             <label className="label">
-              <span className="label-text">Password</span>
+              <span
+                className={`label-text ${
+                  isDark ? "text-base-100" : "text-accent"
+                }`}
+              >
+                Password
+              </span>
             </label>
             <input
               type="password"
@@ -102,14 +126,22 @@ const SignUp = () => {
             type="submit"
           />
         </form>
-        <p className="my-2">
+        <p className={`my-2 ${isDark ? "text-base-100" : "text-accent"}`}>
           Already have an account?{" "}
           <Link className="text-secondary font-semibold" to="/login">
             Please Login
           </Link>
         </p>
-        <div className="divider">OR</div>
-        <button className="btn btn-outline w-full">CONTINUE WITH GOOGLE</button>
+        <div className={`divider ${isDark ? "text-base-100" : "text-accent"}`}>
+          OR
+        </div>
+        <button
+          className={`btn btn-outline w-full ${
+            isDark ? "text-base-100" : "text-accent"
+          }`}
+        >
+          CONTINUE WITH GOOGLE
+        </button>
       </div>
     </div>
   );

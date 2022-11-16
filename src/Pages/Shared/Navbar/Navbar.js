@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
+import { BsSun, BsMoon } from "react-icons/bs";
 
 const Navber = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut, isDark, setIsDark } = useContext(AuthContext);
 
   const handleLogOut = () => {
     logOut()
@@ -11,36 +12,82 @@ const Navber = () => {
       .catch((err) => console.error(err));
   };
 
+  document.body.classList = `${isDark ? "bg-slate-900" : "bg-base-100"}`;
+
   const menuItems = (
     <React.Fragment>
       <li>
-        <Link to="/">Home</Link>
+        <Link
+          className={`${isDark ? "text-base-100" : "text-accent"}`}
+          to="/"
+        >
+          Home
+        </Link>
       </li>
       <li>
-        <Link to="/appointment">Appointment</Link>
+        <Link
+          className={`${isDark ? "text-base-100" : "text-accent"}`}
+          to="/appointment"
+        >
+          Appointment
+        </Link>
       </li>
       <li>
-        <Link to="/about">About</Link>
+        <Link
+          className={`${isDark ? "text-base-100" : "text-accent"}`}
+          to="/about"
+        >
+          About
+        </Link>
       </li>
       {user?.uid ? (
         <>
           <li>
-            <Link to="/dashboard">Dashboard</Link>
+            <Link
+              className={`${isDark ? "text-base-100" : "text-accent"}`}
+              to="/dashboard"
+            >
+              Dashboard
+            </Link>
           </li>
           <li>
-            <button onClick={handleLogOut}>Sign Out</button>
+            <button
+              className={`${isDark ? "text-base-100" : "text-accent"}`}
+              onClick={handleLogOut}
+            >
+              Sign Out
+            </button>
           </li>
         </>
       ) : (
         <li>
-          <Link to="/login">Login</Link>
+          <Link
+            className={`${isDark ? "text-base-100" : "text-accent"}`}
+            to="/login"
+          >
+            Login
+          </Link>
         </li>
       )}
+      <li>
+        <button
+          className={`rounded-full hover:rotate-180 duration-1000 text-lg ${
+            isDark ? "text-base-100" : "text-accent"
+          }`}
+          onClick={() => setIsDark(!isDark)}
+        >
+          {isDark ? <BsSun /> : <BsMoon />}
+        </button>
+      </li>
     </React.Fragment>
   );
 
   return (
-    <div className="navbar bg-base-100 sticky top-0 z-10">
+    <div
+      className={`navbar ${
+        isDark ? "bg-slate-900" : "bg-base-100"
+      } sticky top-0 z-10`}
+    >
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -66,7 +113,12 @@ const Navber = () => {
             {menuItems}
           </ul>
         </div>
-        <Link to="/" className="btn btn-ghost normal-case text-xl">
+        <Link
+          to="/"
+          className={`btn btn-ghost normal-case text-xl ${
+            isDark ? "text-base-100" : "text-accent"
+          }`}
+        >
           Doctors Portal
         </Link>
       </div>
