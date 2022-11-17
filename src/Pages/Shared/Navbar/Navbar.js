@@ -17,10 +17,7 @@ const Navber = () => {
   const menuItems = (
     <React.Fragment>
       <li>
-        <Link
-          className={`${isDark ? "text-base-100" : "text-accent"}`}
-          to="/"
-        >
+        <Link className={`${isDark ? "text-base-100" : "text-accent"}`} to="/">
           Home
         </Link>
       </li>
@@ -69,26 +66,16 @@ const Navber = () => {
           </Link>
         </li>
       )}
-      <li>
-        <button
-          className={`rounded-full hover:rotate-180 duration-1000 text-lg ${
-            isDark ? "text-base-100" : "text-accent"
-          }`}
-          onClick={() => setIsDark(!isDark)}
-        >
-          {isDark ? <BsSun /> : <BsMoon />}
-        </button>
-      </li>
     </React.Fragment>
   );
 
   return (
     <div
-      className={`navbar ${
+      className={`navbar justify-between ${
         isDark ? "bg-slate-900" : "bg-base-100"
       } sticky top-0 z-10`}
     >
-      <div className="navbar-start">
+      <div className="navbar-start w-full">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
             <svg
@@ -108,23 +95,37 @@ const Navber = () => {
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            className={`menu menu-compact dropdown-content mt-3 p-2 shadow ${
+              isDark ? "bg-slate-800" : "bg-base-100"
+            } rounded-box w-52`}
           >
             {menuItems}
           </ul>
         </div>
-        <Link
-          to="/"
-          className={`btn btn-ghost normal-case text-xl ${
-            isDark ? "text-base-100" : "text-accent"
-          }`}
-        >
-          Doctors Portal
-        </Link>
+        <div>
+          <Link
+            to="/"
+            className={`btn btn-ghost normal-case text-xl ${
+              isDark ? "text-base-100" : "text-accent"
+            }`}
+          >
+            Doctors Portal
+          </Link>
+        </div>
       </div>
       <div className="navbar-end hidden lg:flex">
         <ul className="menu menu-horizontal p-0">{menuItems}</ul>
       </div>
+      <button
+        className={`rounded-full hover:rotate-180 duration-1000 p-2 text-lg border-0 ${
+          isDark
+            ? "text-base-100 hover:bg-slate-800"
+            : "text-accent hover:bg-slate-200"
+        }`}
+        onClick={() => setIsDark(!isDark)}
+      >
+        {isDark ? <BsSun /> : <BsMoon />}
+      </button>
     </div>
   );
 };
