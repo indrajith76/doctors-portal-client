@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import useToken from "../../hooks/useToken";
 
 const SignUp = () => {
-  const { createUser, updateUser, isDark } = useContext(AuthContext);
+  const { createUser, updateUser, isDark,googleSignIn } = useContext(AuthContext);
   const {
     register,
     formState: { errors },
@@ -42,6 +42,16 @@ const SignUp = () => {
         console.error(error);
         setSignUpError(error.message);
       });
+  };
+
+  const handleGoogleSignIn = () => {
+    googleSignIn()
+      .then((result) => {
+        const user = result.user;
+        saveUser(user.name, user.email);
+        toast.success("Login Successfully.");
+      })
+      .catch((err) => console.error(err));
   };
 
   // save user data in mongodb server
@@ -158,6 +168,7 @@ const SignUp = () => {
           OR
         </div>
         <button
+        onClick={handleGoogleSignIn}
           className={`btn btn-outline w-full ${
             isDark ? "text-base-100" : "text-accent"
           }`}

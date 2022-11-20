@@ -43,11 +43,28 @@ const Login = () => {
 
   const handleGoogleSignIn = () => {
     googleSignIn()
-      .then(() => {
-        navigate(from, { replace: true });
+      .then((result) => {
+        const user = result.user;
+        saveUser(user.name, user.email);
         toast.success("Login Successfully.");
       })
       .catch((err) => console.error(err));
+  };
+
+  // save user data in mongodb server
+  const saveUser = (name, email) => {
+    const user = { name, email };
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setLoginUserEmail(email)
+      });
   };
 
   return (
