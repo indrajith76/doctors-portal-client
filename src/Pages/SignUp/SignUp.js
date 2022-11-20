@@ -38,6 +38,7 @@ const SignUp = () => {
       });
   };
 
+  // save user data in mongodb server
   const saveUser = (name, email) => {
     const user = { name, email };
     fetch("http://localhost:5000/users", {
@@ -49,8 +50,19 @@ const SignUp = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        navigate("/");
+        getUserToken(email);
+      });
+  };
+
+// JWT fetching(step - 2)
+  const getUserToken = (email) => {
+    fetch(`http://localhost:5000/jwt?email=${email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.accessToken) {
+          localStorage.setItem("accessToken", data.accessToken);
+          navigate("/");
+        }
       });
   };
 

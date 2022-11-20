@@ -1,31 +1,31 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthProvider";
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../../Shared/Loading/Loading";
 
 const MyAppointment = () => {
   const { user } = useContext(AuthContext);
 
   const url = `http://localhost:5000/bookings?email=${user?.email}`;
 
-  const {
-    data: bookings,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
+  const { data: bookings, isLoading } = useQuery({
     queryKey: ["bookings", user?.email],
     queryFn: async () => {
-      const res = await fetch(url);
+      const res = await fetch(url,{
+        // this headers for jwt(step - 3)
+        headers:{
+          authorization: `bearer ${localStorage.getItem('accessToken')}`
+        }
+      });
       const data = res.json();
       return data;
     },
-  }); 
+  });
+
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
+
   return (
     <div>
       <h1 className="text-3xl mb-5">My Appointment</h1>
@@ -43,7 +43,7 @@ const MyAppointment = () => {
           <tbody>
             {bookings.map((booking, i) => (
               <tr key={booking._id}>
-                <th>{i+1}</th>
+                <th>{i + 1}</th>
                 <td>{booking.patient}</td>
                 <td>{booking.treatment}</td>
                 <td>{booking.appointmentDate}</td>
