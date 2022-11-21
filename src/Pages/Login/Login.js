@@ -45,7 +45,7 @@ const Login = () => {
     googleSignIn()
       .then((result) => {
         const user = result.user;
-        saveUser(user.name, user.email);
+        saveUser(user.displayName, user.email);
         toast.success("Login Successfully.");
       })
       .catch((err) => console.error(err));
