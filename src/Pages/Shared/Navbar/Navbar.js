@@ -4,7 +4,7 @@ import { AuthContext } from "../../../contexts/AuthProvider";
 import { BsSun, BsMoon } from "react-icons/bs";
 
 const Navber = () => {
-  const { user, logOut, isDark, setIsDark } = useContext(AuthContext);
+  const { user, logOut, isDark, themeHandler } = useContext(AuthContext);
 
   const handleLogOut = () => {
     logOut()
@@ -122,7 +122,7 @@ const Navber = () => {
             ? "text-base-100 hover:bg-slate-800"
             : "text-accent hover:bg-slate-200"
         }`}
-        onClick={() => setIsDark(!isDark)}
+        onClick={themeHandler}
       >
         {isDark ? <BsSun /> : <BsMoon />}
       </button>

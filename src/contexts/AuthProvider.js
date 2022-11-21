@@ -20,6 +20,22 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isDark, setIsDark] = useState(false);
 
+  useEffect(() => {
+    setIsDark(JSON.parse(localStorage.getItem("theme")));
+  }, []);
+
+  const themeHandler = () => {
+    if(isDark){
+      setIsDark(false);
+      localStorage.setItem("theme", JSON.stringify(false));
+    }
+    else{
+      setIsDark(true);
+      localStorage.setItem("theme", JSON.stringify(true));
+    }
+  };
+
+
   const googleProvider = new GoogleAuthProvider();
 
   const createUser = (email, password) => {
@@ -69,7 +85,7 @@ const AuthProvider = ({ children }) => {
     googleSignIn,
     resetPassword,
     isDark,
-    setIsDark,
+    themeHandler,
   };
 
   return (
