@@ -11,10 +11,6 @@ const ManageDoctors = () => {
     setDeletingDoctor(null);
   };
 
-  const handleDeleteDoctor = (doctor) => {
-    console.log(doctor);
-  };
-
   const {
     data: doctors,
     isLoading,
@@ -34,23 +30,21 @@ const ManageDoctors = () => {
     },
   });
 
-  const handleDelete = (user_id) => {
-    const confirm = window.confirm("Are you want to delete?");
-    if (confirm) {
-      fetch(`http://localhost:5000/doctors?id=${user_id}`, {
-        method: "DELETE",
-        headers: {
-          authorization: `bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.deletedCount > 0) {
-            toast.success("Deleted Successfully");
+  const handleDeleteDoctor = (doctor) => {
+    console.log(doctor);
+    fetch(`http://localhost:5000/doctors/${doctor._id}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount > 0) {
             refetch();
-          }
-        });
-    }
+            toast.success(`Doctor ${doctor.name} deleted Successfully`);
+        }
+      });
   };
 
   if (isLoading) {
@@ -104,9 +98,10 @@ const ManageDoctors = () => {
         <ConfirmationModal
           title={`Are you sure you want to delete?`}
           message={`If you delete ${deletingDoctor.name}. It cannot be undo.`}
-          successAction = {handleDeleteDoctor}
-          modalData = {deletingDoctor}
+          successAction={handleDeleteDoctor}
+          modalData={deletingDoctor}
           closeModal={closeModal}
+          successButtonName="Delete"
         ></ConfirmationModal>
       )}
     </div>
