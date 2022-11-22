@@ -1,14 +1,17 @@
 import React, { useContext } from "react";
-import { useRouteError } from "react-router-dom";
+import { useNavigate, useRouteError } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
 const DisplayError = () => {
+  const navigate = useNavigate();
   const error = useRouteError();
-  const { isDark, logOut } = useContext(AuthContext);
+  const { logOut } = useContext(AuthContext);
 
   const handleLogOut = () => {
     logOut()
-      .then(() => {})
+      .then(() => {
+        navigate("/");
+      })
       .catch((err) => console.error(err));
   };
 
@@ -17,14 +20,7 @@ const DisplayError = () => {
       <p className="text-red-500">Something went wrong!!!</p>
       <p className="text-red-400">{error.statusText || error.message}</p>
       <h2 className="text-3xl">
-        Please{" "}
-        <button
-          className={`${isDark ? "text-base-100" : "text-accent"}`}
-          onClick={handleLogOut}
-        >
-          Sign Out
-        </button>{" "}
-        and log back in
+        Please <button onClick={handleLogOut}>Sign Out</button> and log back in
       </h2>
     </div>
   );
