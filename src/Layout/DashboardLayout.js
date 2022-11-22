@@ -24,9 +24,7 @@ const DashboardLayout = () => {
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           <ul
             className={`menu p-4 w-80 ${
-              isDark
-                ? "text-base-100 bg-slate-900"
-                : "text-slate-900 bg-base-100"
+              isDark ? "text-base-100" : "text-slate-900"
             }`}
           >
             <li>
