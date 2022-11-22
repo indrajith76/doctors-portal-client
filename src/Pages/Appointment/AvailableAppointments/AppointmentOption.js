@@ -2,8 +2,7 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
 const AppointmentOption = ({ appointmentOption, setTreatment }) => {
-  const { name, slots, price } = appointmentOption;
-  console.log(price)
+  const { name, slots, price } = appointmentOption; 
   const { isDark } = useContext(AuthContext);
   return (
     <div className={`card shadow-xl border ${isDark && "border-primary"}`}>
