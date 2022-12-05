@@ -6,19 +6,20 @@ import toast from "react-hot-toast";
 import useToken from "../../hooks/useToken";
 
 const SignUp = () => {
-  const { createUser, updateUser, isDark,googleSignIn } = useContext(AuthContext);
+  const { createUser, updateUser, isDark, googleSignIn } =
+    useContext(AuthContext);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
   const [signUpError, setSignUpError] = useState("");
-  const [createdUserEmail,setCreatedUserEmail]=useState("")
-  const [token]=useToken(createdUserEmail)
+  const [createdUserEmail, setCreatedUserEmail] = useState("");
+  const [token] = useToken(createdUserEmail);
   const navigate = useNavigate();
 
-  if(token){
-    navigate('/')
+  if (token) {
+    navigate("/");
   }
 
   const handleSignUp = (data) => {
@@ -57,7 +58,7 @@ const SignUp = () => {
   // save user data in mongodb server
   const saveUser = (name, email) => {
     const user = { name, email };
-    fetch("http://localhost:5000/users", {
+    fetch("https://doctors-portal-server-ashen-five.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -66,20 +67,16 @@ const SignUp = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setCreatedUserEmail(email)
+        setCreatedUserEmail(email);
       });
   };
-
-
 
   return (
     <div className="flex justify-center my-10">
       <div className="w-96 p-7 border rounded-lg shadow-lg">
         <h2
           className={`text-xl text-center ${
-            isDark ? "text-base-100" : "text-accent"
-          }`}
-        >
+            isDark ? "text-base-100" : "text-accent"}`} >
           Sign Up
         </h2>
         <form onSubmit={handleSubmit(handleSignUp)}>
@@ -168,7 +165,7 @@ const SignUp = () => {
           OR
         </div>
         <button
-        onClick={handleGoogleSignIn}
+          onClick={handleGoogleSignIn}
           className={`btn btn-outline w-full ${
             isDark ? "text-base-100" : "text-accent"
           }`}

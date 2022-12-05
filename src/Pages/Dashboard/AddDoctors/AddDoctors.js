@@ -15,12 +15,14 @@ const AddDoctors = () => {
   } = useForm();
   const imageHostKey = process.env.REACT_APP_imgbb_key;
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const { data: specialties, isLoading } = useQuery({
     queryKey: ["specialty"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/appointmentSpecialty");
+      const res = await fetch(
+        "https://doctors-portal-server-ashen-five.vercel.app/appointmentSpecialty"
+      );
       const data = res.json();
       return data;
     },
@@ -46,21 +48,21 @@ const AddDoctors = () => {
             image: imgData.data.url,
           };
 
-        //   save doctor information to the database
-        fetch('http://localhost:5000/doctors',{
-            method:'POST',
-            headers:{
-                'content-type':'application/json',
-                authorization:`bearer ${localStorage.getItem('accessToken')}`
+          //   save doctor information to the database
+          fetch("https://doctors-portal-server-ashen-five.vercel.app/doctors", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              authorization: `bearer ${localStorage.getItem("accessToken")}`,
             },
-            body: JSON.stringify(doctor)
-        })
-        .then(res=> res.json())
-        .then(result => {
-            console.log(result);
-            toast.success(`${data.name} is added successfully`)
-            navigate('/dashboard/managedoctors')
-        })
+            body: JSON.stringify(doctor),
+          })
+            .then((res) => res.json())
+            .then((result) => {
+              console.log(result);
+              toast.success(`${data.name} is added successfully`);
+              navigate("/dashboard/managedoctors");
+            });
         }
       });
   };

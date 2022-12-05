@@ -19,6 +19,7 @@
     "react-hook-form": "^7.39.4",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.6.0",
+    "react-preloaders2": "^3.0.5",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"

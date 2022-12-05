@@ -17,14 +17,13 @@ const Login = () => {
   const [isOnResetModal, setIsOnResetModal] = useState(true);
   const [loginUserEmail, setLoginUserEmail] = useState("");
   const [token] = useToken(loginUserEmail);
-  
+
   const location = useLocation();
   const navigate = useNavigate();
-  
-  const from = location?.state?.from?.pathname || "/";
-  
 
-  if(token){
+  const from = location?.state?.from?.pathname || "/";
+
+  if (token) {
     navigate(from, { replace: true });
   }
 
@@ -34,8 +33,8 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
-        setLoginUserEmail(user.email)
-        
+        setLoginUserEmail(user.email);
+
         toast.success("Login Successfully.");
       })
       .catch((err) => setLoginError(err.message));
@@ -54,7 +53,7 @@ const Login = () => {
   // save user data in mongodb server
   const saveUser = (name, email) => {
     const user = { name, email };
-    fetch("http://localhost:5000/users", {
+    fetch("https://doctors-portal-server-ashen-five.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -63,7 +62,7 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setLoginUserEmail(email)
+        setLoginUserEmail(email);
       });
   };
 

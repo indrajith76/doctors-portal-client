@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import toast from "react-hot-toast";
 
-const BookingModal = ({ treatment, selectedDate, setTreatment,refetch }) => {
+const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
   const { user } = useContext(AuthContext);
   const { name: treatmentName, slots, price } = treatment;
   const date = format(selectedDate, "PP");
@@ -23,10 +23,10 @@ const BookingModal = ({ treatment, selectedDate, setTreatment,refetch }) => {
       slot,
       email,
       phone,
-      price
+      price,
     };
     // add booking in server
-    fetch("http://localhost:5000/bookings", {
+    fetch("https://doctors-portal-server-ashen-five.vercel.app/bookings", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(booking),
@@ -37,10 +37,9 @@ const BookingModal = ({ treatment, selectedDate, setTreatment,refetch }) => {
         if (data.acknowledged) {
           setTreatment(null);
           toast.success("Booking Confirmed.");
-          refetch()
-        }
-        else{
-          toast.error(data.message)
+          refetch();
+        } else {
+          toast.error(data.message);
         }
       })
       .catch((err) => console.error(err));
